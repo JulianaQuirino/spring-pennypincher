@@ -8,7 +8,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
 
 @Configuration
-@Profile("local")
+@Profile("prod")
 public class MinhaConfiguracao {
 
     /*@Bean(name="applicationName")
@@ -24,7 +24,7 @@ public class MinhaConfiguracao {
         appUserService.createUserAdmin();
 
         return args -> {
-            System.out.println("Rodando a aplicação em ambiente desenvolvimento");
+            System.out.println("Rodando a aplicação em ambiente produção");
         };
     }
 
