@@ -16,12 +16,29 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class AppUserService implements UserDetailsService {
 
     @Autowired
     private AppUserRepository repository;
+
+    public void createUserAdmin(){
+
+        Optional<AppUser> appUser = repository.findByUsername("admin");
+
+        if (appUser == null || !appUser.isPresent()) {
+            AppUser userAdmin = new AppUser();
+            userAdmin.setUsername("admin");
+            userAdmin.setName("Admin");
+            userAdmin.setPassword("12345");
+            userAdmin.setPhone("(31) 99245-4848");
+            userAdmin.setEmail("juquisilva@gmail.com");
+            userAdmin.setAdmin(true);
+            repository.save(userAdmin);
+        }
+    }
 
     public AppUser save (AppUser appUser){
 
