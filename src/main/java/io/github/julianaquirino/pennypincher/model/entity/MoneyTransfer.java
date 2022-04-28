@@ -30,12 +30,12 @@ public class MoneyTransfer {
     private String description;
 
     @ManyToOne
-    @JoinColumn(name = "id_account_debit")
-    private Account accountDebit;
+    @JoinColumn(name = "id_record_debit")
+    private Record recordDebit;
 
     @ManyToOne
-    @JoinColumn(name = "id_account_credit")
-    private Account accountCredit;
+    @JoinColumn(name = "id_record_credit")
+    private Record recordCredit;
 
     @Column
     private BigDecimal value;

@@ -5,7 +5,6 @@ import io.github.julianaquirino.pennypincher.model.entity.AppUser;
 import io.github.julianaquirino.pennypincher.model.repository.DailyRecordRepository;
 import io.github.julianaquirino.pennypincher.model.repository.AppUserRepository;
 import io.github.julianaquirino.pennypincher.model.rest.dto.DailyRecordDTO;
-import io.github.julianaquirino.pennypincher.model.util.BigDecimalConverter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
@@ -24,13 +23,11 @@ public class DailyRecordController {
 
     private final DailyRecordRepository repository;
     private final AppUserRepository appUserRepository;
-    private final BigDecimalConverter bigDecimalConverter;
 
     @Autowired
-    private DailyRecordController(DailyRecordRepository repository, AppUserRepository appUserRepository, BigDecimalConverter bigDecimalConverter){
+    private DailyRecordController(DailyRecordRepository repository, AppUserRepository appUserRepository){
         this.repository = repository;
         this.appUserRepository = appUserRepository;
-        this.bigDecimalConverter = bigDecimalConverter;
     }
 
     @PostMapping
@@ -94,9 +91,7 @@ public class DailyRecordController {
     public void update (@PathVariable Integer id, @RequestBody DailyRecordDTO updatedDailyRecordDTO) {
         LocalDate date = LocalDate.parse(updatedDailyRecordDTO.getDate(), DateTimeFormatter.ofPattern("dd/MM/yyyy"));
         List<DailyRecord> currentDailyRecord = this.repository.existsByDateAndUser(date, updatedDailyRecordDTO.getUsernameAppUser());
-        System.out.println(date);
-        System.out.println(currentDailyRecord);
-        System.out.println(updatedDailyRecordDTO.getUsernameAppUser());
+
         if (currentDailyRecord != null && currentDailyRecord.size() > 0){
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Data de lançamento já existe!");
         }
