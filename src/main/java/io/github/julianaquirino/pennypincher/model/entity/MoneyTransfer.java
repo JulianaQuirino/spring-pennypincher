@@ -29,13 +29,13 @@ public class MoneyTransfer {
     @Column(nullable = false)
     private String description;
 
-    @ManyToOne
-    @JoinColumn(name = "id_record_debit")
-    private Record recordDebit;
+    @ManyToOne(cascade = CascadeType.REMOVE)
+    @JoinColumn(name = "id_debit_record")
+    private Record debitRecord;
 
-    @ManyToOne
-    @JoinColumn(name = "id_record_credit")
-    private Record recordCredit;
+    @ManyToOne(cascade = CascadeType.REMOVE)
+    @JoinColumn(name = "id_credit_record")
+    private Record creditRecord;
 
     @Column
     private BigDecimal value;
