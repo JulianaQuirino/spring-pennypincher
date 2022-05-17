@@ -1,5 +1,6 @@
 package io.github.julianaquirino.pennypincher.model.entity;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import io.github.julianaquirino.pennypincher.model.util.CategoryType;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -7,6 +8,8 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Data
@@ -28,6 +31,10 @@ public class Account {
     @ManyToOne
     @JoinColumn(name = "id_app_user")
     private AppUser appUser;
+
+    @OneToMany(targetEntity=Record.class, mappedBy="account", fetch = FetchType.LAZY)
+    @JsonManagedReference
+    private List<Record> records = new ArrayList<>();
 
 }
 

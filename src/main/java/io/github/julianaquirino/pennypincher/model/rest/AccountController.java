@@ -5,6 +5,7 @@ import io.github.julianaquirino.pennypincher.model.entity.AppUser;
 import io.github.julianaquirino.pennypincher.model.repository.AccountRepository;
 import io.github.julianaquirino.pennypincher.model.repository.AppUserRepository;
 import io.github.julianaquirino.pennypincher.model.rest.dto.AccountDTO;
+import io.github.julianaquirino.pennypincher.model.rest.dto.GoalDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
@@ -44,10 +45,16 @@ public class AccountController {
     }
 
     @GetMapping("{id}")
-    public Account findById(@PathVariable Integer id){
-        return repository
+    public AccountDTO findById(@PathVariable Integer id){
+        Account account = repository
                 .findById(id)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Conta não encontrada"));
+
+        AccountDTO accountDTO = null;
+        if(account != null){
+            accountDTO = new AccountDTO(account.getId(), account.getName(), account.getDescription(), account.getAppUser().getUsername());
+        }
+        return accountDTO;
     }
 
     @DeleteMapping("{id}")
@@ -78,7 +85,7 @@ public class AccountController {
 
     @GetMapping("{username}")
     @RequestMapping("/accountsByUsername")
-    public List<Account> getAllByUsername(@RequestParam(value = "username", required = true) String username){
+    public List<AccountDTO> getAllByUsername(@RequestParam(value = "username", required = true) String username){
         return repository.findAllByUsernameOrderByNameAsc(username);
     }
 

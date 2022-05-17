@@ -5,6 +5,7 @@ import lombok.NoArgsConstructor;
 
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
+import java.math.BigDecimal;
 
 @Data
 @NoArgsConstructor
@@ -19,4 +20,11 @@ public class AccountDTO {
 
     @NotEmpty(message = "{campo.usuario.obrigatorio}")
     private String usernameAppUser;
+
+    public AccountDTO(Integer id, String name, String description, String usernameAppUser) {
+        this.id = id;
+        this.name = name;
+        this.description = description;
+        this.usernameAppUser = usernameAppUser;
+    }
 }

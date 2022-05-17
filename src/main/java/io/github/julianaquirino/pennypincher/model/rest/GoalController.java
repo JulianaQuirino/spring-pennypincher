@@ -48,10 +48,18 @@ public class GoalController {
     }
 
     @GetMapping("{id}")
-    public Goal findById(@PathVariable Integer id){
-        return repository
+    public GoalDTO findById(@PathVariable Integer id){
+        Goal goal = repository
                 .findById(id)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Meta não encontrada"));
+
+        GoalDTO goalDTO = null;
+        if(goal != null){
+            String value = goal.getValue().toString();
+            value = value.replace(".", ",");
+            goalDTO = new GoalDTO(goal.getId(), goal.getName(), value, goal.getAppUser().getUsername());
+        }
+        return goalDTO;
     }
 
     @DeleteMapping("{id}")
@@ -82,7 +90,7 @@ public class GoalController {
 
     @GetMapping("{username}")
     @RequestMapping("/goalsByUsername")
-    public List<Goal> getAllByUsername(@RequestParam(value = "username", required = true) String username){
+    public List<GoalDTO> getAllByUsername(@RequestParam(value = "username", required = true) String username){
         return repository.findAllByUsernameOrderByNameAsc(username);
     }
 

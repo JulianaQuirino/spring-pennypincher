@@ -40,6 +40,7 @@ public class Record {
 
     @ManyToOne
     @JoinColumn(name = "id_account")
+    @JsonBackReference
     private Account account;
 
     @Column
