@@ -28,7 +28,6 @@ public class MoneyTransferListDTO {
     public MoneyTransferListDTO (int id, LocalDate moneyTransferDate, String description, String debitAccountName,
                                  String creditAccountName, BigDecimal value, String goalName){
         this.id = id;
-        String pattern = "dd/MM/yyyy";
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
         String formattedDate = moneyTransferDate.format(formatter);
         this.date = formattedDate;

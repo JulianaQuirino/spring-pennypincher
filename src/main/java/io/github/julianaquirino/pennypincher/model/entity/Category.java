@@ -26,7 +26,7 @@ public class Category {
     private String name;
 
     @Enumerated(EnumType.STRING)
-    @Column(nullable = false)
+    @Column(nullable = false, columnDefinition = "enum('D','C')")
     private CategoryType categoryType;
 
     @ManyToOne
