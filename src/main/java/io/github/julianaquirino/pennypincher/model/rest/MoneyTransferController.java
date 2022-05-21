@@ -144,8 +144,8 @@ public class MoneyTransferController {
 
         MoneyTransferDTO savedMoneytransferDTO = new MoneyTransferDTO();
         savedMoneytransferDTO.setId(savedMoneytransfer.getId());
-        savedMoneytransferDTO.setDebitAccountId(savedMoneytransfer.getDebitRecord().getId());
-        savedMoneytransferDTO.setCreditAccountId(savedMoneytransfer.getCreditRecord().getId());
+        savedMoneytransferDTO.setDebitAccountId(savedMoneytransfer.getDebitRecord().getAccount().getId());
+        savedMoneytransferDTO.setCreditAccountId(savedMoneytransfer.getCreditRecord().getAccount().getId());
         savedMoneytransferDTO.setDate(moneytransferDate);
         savedMoneytransferDTO.setValue(moneyTransferValue);
         savedMoneytransferDTO.setDescription(moneyTransfer.getDescription());

@@ -7,6 +7,7 @@ import io.github.julianaquirino.pennypincher.model.repository.LimitRepository;
 import io.github.julianaquirino.pennypincher.model.repository.AppUserRepository;
 import io.github.julianaquirino.pennypincher.model.rest.dto.LimitDTO;
 import io.github.julianaquirino.pennypincher.model.rest.dto.LimitListDTO;
+import io.github.julianaquirino.pennypincher.model.rest.dto.SubcategoryDTO;
 import io.github.julianaquirino.pennypincher.model.util.BigDecimalConverter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -57,9 +58,20 @@ public class LimitController {
     }
 
     @GetMapping("{id}")
-    public Limit findById(@PathVariable Integer id){
+    public LimitDTO findById(@PathVariable Integer id){
         return repository
                 .findById(id)
+                .map(limit -> {
+                    LimitDTO limitDTO = new LimitDTO();
+                    limitDTO.setId(limit.getId());
+                    limitDTO.setMonth(limit.getMonth());
+                    limitDTO.setYear(limit.getYear());
+                    limitDTO.setCategoryId(limit.getCategory().getId());
+                    String value = limit.getMaxValue().toString();
+                    value = value.replace(".", ",");
+                    limitDTO.setMaxValue(value);
+                    return limitDTO;
+                })
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Limite não encontrado"));
     }
 
